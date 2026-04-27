@@ -1,0 +1,227 @@
+import org.gradle.api.publish.internal.DefaultPublishingExtension
+
+plugins {
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
+	id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	mavenCentral()
+	// Fabric / Kotlin
+	maven { url = "https://maven.fabricmc.net/" }
+
+	// ARRP
+	maven { url = "https://ueaj.dev/maven" }
+
+	// FTB mods
+	maven {
+		url = "https://maven.ftb.dev/releases"
+		content { includeGroup "dev.ftb.mods" }
+	}
+	// Architectury
+	maven { url = "https://maven.architectury.dev" }
+
+	// Modrinth
+	maven { url = "https://api.modrinth.com/maven" }
+
+	// YiGD - dependencie
+	maven { url = "https://maven.shedaniel.me" }
+	maven { url = "https://server.bbkr.space/artifactory/libs-release" }
+	maven { url = "https://maven.nucleoid.xyz/" }
+
+	// Carry On
+	maven { url = "https://maven.blamejared.com/" }
+	maven {
+		url = "https://jitpack.io/"
+		content { excludeGroup "io.github.fabricators_of_create" }
+	}
+	maven { url = "https://maven.siphalor.de" }
+
+	// GeckoLib
+	maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
+
+	// Go Fish
+	maven { url = "https://cursemaven.com" }
+
+	// Hybrid Aquatic - dependencie
+	maven {
+		url = "https://maven.jamieswhiteshirt.com/libs-release"
+		content { includeGroup "com.jamieswhiteshirt" }
+
+		// Farmer's Delight
+		maven { url = 'https://maven.greenhouse.lgbt/releases/' }
+		maven { url = "https://mvn.devos.one/releases/" }
+	}
+
+	sourceSets {
+		main {
+			java {
+				srcDirs = ["src/main/java"]
+			}
+			resources {
+				srcDirs = ["src/main/resources"]
+			}
+		}
+
+		client {
+			java {
+				srcDirs = ["src/client/java"]
+			}
+			resources {
+				srcDirs = ["src/client/resources"]
+			}
+
+			compileClasspath += main.compileClasspath
+			runtimeClasspath += main.runtimeClasspath
+			compileClasspath += main.output
+			runtimeClasspath += main.output
+		}
+	}
+
+	loom {
+		mixin {
+			add sourceSets.main, "playroom-project-bundlemod.refmap.json"
+			add sourceSets.client, "playroom-project-bundlemod.refmap.json"
+			defaultRefmapName = "playroom-project-bundlemod.refmap.json"
+		}
+
+		runs {
+			def configureClientSources = { run ->
+				run.source sourceSets.main
+				run.source sourceSets.client
+			}
+
+			client {
+				client()
+				name = "Minecraft Client"
+				configureClientSources(delegate)
+				vmArg "-Dmixin.env.ignoreRequired=true"
+			}
+
+			client2 {
+				client()
+				name = "Minecraft Client 2"
+				runDir = "run2"
+				configureClientSources(delegate)
+				vmArg "-Dmixin.env.ignoreRequired=true"
+			}
+
+			server {
+				server()
+				name = "Minecraft Server"
+				source sourceSets.main
+				vmArg "-Dmixin.env.ignoreRequired=true"
+			}
+		}
+	}
+
+	dependencies {
+		// Main dependencies
+		minecraft "com.mojang:minecraft:${project.minecraft_version}"
+		mappings loom.officialMojangMappings()
+		modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+		modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+		// Other dependencies
+		modImplementation "dev.architectury:architectury-fabric:${project.architectury_version}"
+		modImplementation include("me.lucko:fabric-permissions-api:${project.permissions_version}")
+		modImplementation include("io.github.cottonmc:LibGui:${project.lib_gui_version}")
+		modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+			exclude(group: "net.fabricmc.fabric-api")
+		}
+		implementation "com.github.llamalad7.mixinextras:mixinextras-common:${project.mixinextras_version}"
+		modImplementation "de.siphalor:amecsapi-1.20:${project.amecsapi_version}"
+		modImplementation "software.bernie.geckolib:geckolib-fabric-${project.minecraft_version}:${geckolib_version}"
+		modImplementation "net.fabricmc:fabric-language-kotlin:${fabric_kotlin_version}"
+		modImplementation "maven.modrinth:lithostitched:${lithostitched_version}"
+		include modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${reach_entity_attributes_version}")
+		modImplementation "maven.modrinth:forge-config-api-port:${forge_config_api_port_version}"
+
+		// ARRP
+		modImplementation "net.devtech:arrp:${arrp_version}"
+
+		// FTB Chunks + dependencies
+		modImplementation "dev.ftb.mods:ftb-library-fabric:${project.ftb_library_version}"
+		modImplementation "dev.ftb.mods:ftb-teams-fabric:${project.ftb_teams_version}"
+		modImplementation "dev.ftb.mods:ftb-chunks-fabric:${project.ftb_chunks_version}"
+
+		// YiGD
+		modImplementation "maven.modrinth:yigd:${project.yigd_version}"
+
+		// Carry On
+		modImplementation "tschipp.carryon:carryon-fabric-${project.minecraft_version}:${project.carry_on_version}"
+
+		// Go Fish
+		modImplementation "curse.maven:go-fish-431135:${go_fish_fil_id}"
+
+		// Hybrid Aquatic
+		modImplementation "maven.modrinth:hybrid-aquatic:${hybrid_aquatic_version}-fabric"
+
+		// Small Ships
+		modImplementation "maven.modrinth:small-ships:${smallships_version}"
+
+		// Better Pickaxe Trims
+		modImplementation files("libs/${betterpickaxetrims_filename}.jar") // locally
+
+		// [Let's Do] Vinery
+		modImplementation "maven.modrinth:lets-do-vinery:${vinery_version}"
+
+		// Farmer's Delight Refabricated
+		modImplementation("vectorwing:FarmersDelight:${farmersdelight_version}") {
+			exclude group: "net.fabricmc"
+		}
+	}
+
+	processResources {
+		inputs.property "version", project.version
+
+		filesMatching("fabric.mod.json") {
+			expand "version": inputs.properties.version
+		}
+	}
+
+	tasks.withType(JavaCompile).configureEach {
+		it.options.release = 17
+	}
+
+	java {
+		withSourcesJar()
+
+		sourceCompatibility = JavaVersion.VERSION_17
+		targetCompatibility = JavaVersion.VERSION_17
+	}
+
+	jar {
+		inputs.property "archivesName", project.base.archivesName
+
+		from(sourceSets.client.output)
+
+		from("LICENSE") {
+			rename { "${it}_${inputs.properties.archivesName}" }
+		}
+	}
+
+	tasks.named("sourcesJar") {
+		from(sourceSets.client.allSource)
+	}
+
+	DefaultPublishingExtension extension = publishing {
+		publications {
+			create("mavenJava", MavenPublication) {
+				artifactId = project.archives_base_name
+				from components.java
+			}
+		}
+
+		repositories {
+		}
+	}
+
+}

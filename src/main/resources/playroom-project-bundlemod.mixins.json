@@ -1,0 +1,28 @@
+{
+	"required": true,
+	"package": "ppbundle.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"refmap": "playroom-project-bundlemod.refmap.json",
+	"mixins": [
+		"FTBChunksExpectedImplMixin",
+		"ClaimedChunkManagerImplMixin",
+		"ftbchunks.ServerPlayerDieMixin",
+		"ftbchunks.BaseS2CMessageSendToMixin",
+
+		"smallships.ShipVariantStateMixin",
+		"smallships.BoatVariantStateMixin",
+		"smallships.BoatDropMixin",
+		"smallships.ChestBoatDropMixin",
+		"smallships.ShipDropMixin",
+
+		"pickaxetrims.CryingObsidianMultiBreakEffectMixin",
+
+		"vinery.WanderingWinemakerEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

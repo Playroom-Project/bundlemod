@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "playroom-project-bundlemod",
+  "version": "${version}",
+  "name": "Playroom Project Bundlemod",
+  "description": "A combination of mods for Playroom Project",
+  "authors": [
+    "TLiG"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/playroom-project-bundlemod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ppbundle.PlayroomProjectBundlemod"
+    ],
+    "client": [
+      "ppbundle.PlayroomProjectBundlemodClient"
+    ]
+  },
+  "mixins": [
+    "playroom-project-bundlemod.mixins.json",
+    "playroom-project-bundlemod.client.mixins.json",
+    "playroom-project-bundlemod.yigd.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}

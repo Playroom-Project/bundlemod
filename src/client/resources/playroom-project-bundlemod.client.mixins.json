@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "ppbundle.mixin.client",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "playroom-project-bundlemod.refmap.json",
+  "client": [
+    "smallships.BoatRendererTextureMixin",
+    "smallships.ShipRendererTextureMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+	"required": false,
+	"package": "ppbundle.mixin.yigd",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"GraveComponentPlaceAndLoadMixin",
+		"GraveComponentClaimMixin"
+	],
+	"injectors": {
+		"defaultRequire": 0
+	}
+}

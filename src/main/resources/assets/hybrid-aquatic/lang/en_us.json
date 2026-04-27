@@ -1,0 +1,22 @@
+{
+  "tooltip.hybrid-aquatic.crate": "Shift and right click to open",
+  "tooltip.hybrid_aquatic.crate": "Shift and right click to open",
+  "tooltip.hybrid-aquatic.open_crate": "Shift and right click to open",
+  "tooltip.hybrid_aquatic.open_crate": "Shift and right click to open",
+  "tooltip.hybrid-aquatic.break_with_axe_to_open": "Shift and right click to open",
+  "tooltip.hybrid_aquatic.break_with_axe_to_open": "Shift and right click to open",
+  "tooltip.hybrid-aquatic.crate.open": "Shift and right click to open",
+  "tooltip.hybrid_aquatic.crate.open": "Shift and right click to open",
+
+  "block.hybrid-aquatic.acacia_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.bamboo_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.birch_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.cherry_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.crab_pot.description": "Shift and right click to open",
+  "block.hybrid-aquatic.dark_oak_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.hybrid_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.jungle_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.mangrove_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.oak_crate.description": "Shift and right click to open",
+  "block.hybrid-aquatic.spruce_crate.description": "Shift and right click to open"
+}
